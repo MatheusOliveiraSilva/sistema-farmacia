@@ -5,13 +5,12 @@
 
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10209107</property>
-    <property name="hibernate.connection.username">sql10209107</property>
-    <property name="hibernate.connection.password">VqTskRZFiF</property>
+   <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost/pharmacy2</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
     <property name="hbm2ddl.auto">update</property>
-    
     <mapping class="model.Employee" />
     <mapping class="model.Manufacturer" />
     <mapping class="model.Position" />
