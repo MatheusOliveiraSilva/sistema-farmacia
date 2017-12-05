@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+
+	<ui:composition template="/templates/model.xhtml">
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:event listener="#{employeeBean.fetchAll}" type="preRenderView" />
+			</f:metadata>
+		</ui:define>
+		
+		<ui:define name="content">						
+			<h:form>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Funcionário"/>
+					</f:facet>
+				</p:toolbar>
+					
+				<p:separator />
+				
+				<p:button value="Novo" outcome="/pages/employee/post.xhtml?faces-redirect=true">
+					<f:param name="action" value="new"/>
+				</p:button>
+			
+				<p:separator />
+			
+				<p:dataTable emptyMessage="Nenhum registro encontrado." value="#{employeeBean.employees}" var="employee" rows="10" paginator="true">
+					<p:column headerText="Código" sortBy="#{employee.id}" style="width: 10%">
+						<h:outputText value="#{employee.id}" />
+					</p:column>
+					
+					<p:column headerText="Nome" sortBy="#{employee.name}">
+						<h:outputText value="#{employee.name}"/>
+					</p:column>
+					
+					<p:column headerText="CPF" sortBy="#{employee.cpf}" style="width: 15%">
+						<h:outputText value="#{employee.cpf}"/>
+					</p:column>
+					
+					<p:column headerText="Cargo">
+						<h:outputText value="#{employee.position.description}"/>
+					</p:column>
+				
+					<p:column headerTect="Opções" >
+						<p:button value="Editar" outcome="/pages/employee/post.xhtml?faces-redirect=true">
+							<f:param name="id" value="#{employee.id}" />
+							<f:param name="action" value="edit"/>						
+						</p:button>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

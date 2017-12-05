@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:insert name="metadata" />
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="style.css"/>
+	<title>Farmácia</title>
+</h:head>
+
+<h:body>
+	<p:growl id = "globalMessage"/>
+
+	<p:layout fullPage="true">
+		<p:layoutUnit header="Farmácia" position="north" resizable="false" closable="false" collapsed="false">
+		</p:layoutUnit>
+		
+		<p:layoutUnit position="west" size="250" resizable="false" closable="false" collapsed="false">
+			<h:form id="menu">
+				<p:panelMenu>
+					<p:submenu label="Cargo" rendered="#{authenticateBean.employee.position != null}">
+						<p:menuitem value="Listagem" outcome="/pages/position/list.xhtml" />
+ 						<p:menuitem value="Cadastrar" outcome="/pages/position/post.xhtml" >
+ 							<f:param name="action" value="new" />
+ 						</p:menuitem>						  
+	 				</p:submenu>
+				
+					<p:submenu label="Fabricante" rendered="#{authenticateBean.employee.position != null}">
+						<p:menuitem value="Listagem" outcome="/pages/manufacturer/list.xhtml" />
+ 						<p:menuitem value="Cadastrar" outcome="/pages/manufacturer/post.xhtml" >
+							<f:param name="action" value="new" />					  	
+ 						</p:menuitem>						  
+	 				</p:submenu>
+	 				
+					<p:submenu label="Funcionário" rendered="#{authenticateBean.employee.position != null}">
+						<p:menuitem value="Listagem" outcome="/pages/employee/list.xhtml" />
+ 						<p:menuitem value="Cadastrar" outcome="/pages/employee/post.xhtml" >
+							<f:param name="action" value="new" />					  	
+ 						</p:menuitem>						  
+	 				</p:submenu>
+	 				
+					<p:submenu label="Produto" rendered="#{authenticateBean.employee.position != null}">
+						<p:menuitem value="Listagem" outcome="/pages/product/list.xhtml" />
+ 						<p:menuitem value="Cadastrar" outcome="/pages/product/post.xhtml" >
+							<f:param name="action" value="new" />					  	
+ 						</p:menuitem>						  
+	 				</p:submenu>
+	 				
+					<p:submenu label="Venda" rendered="#{authenticateBean.employee.position != null}">
+ 						<p:menuitem value="Nova Venda" outcome="/pages/sale/post.xhtml" >
+							<f:param name="action" value="new" />					  	
+ 						</p:menuitem>						  
+	 				</p:submenu>
+	 				
+	 				<p:submenu label="Opções" rendered="#{authenticateBean.employee.position != null}">
+ 						<p:menuitem value="Sair" action="#{authenticateBean.exit}">
+ 						</p:menuitem>						  
+	 				</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" resizable="false" closable="false" collapsed="false">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

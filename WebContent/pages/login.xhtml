@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+
+	<ui:composition template="/templates/model.xhtml">
+		<ui:define name="metadata" />
+	
+		<ui:define name="content">
+			<h:form>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Login"/>
+					</f:facet>
+				</p:toolbar>
+				
+				<h:panelGrid columns="2">
+					<h:outputLabel value="CPF:" />
+					<p:inputMask size="20" mask="999.999.999-99" value="#{authenticateBean.employee.cpf}">
+						<f:validateBean />
+					</p:inputMask>
+					
+					<p:outputLabel value="Senha:" />
+					<p:password size="20"  value="#{authenticateBean.employee.password}">
+						<f:validateBean />
+					</p:password>
+				</h:panelGrid>
+				
+				<h:panelGrid columns="1">
+					<p:commandButton value="Entrar" update=":globalMessage :menu" action="#{authenticateBean.login}"/>
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

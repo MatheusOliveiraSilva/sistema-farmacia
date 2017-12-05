@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+
+	<ui:composition template="/templates/model.xhtml">
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:event listener="#{manufacturerBean.fetchAll}" type="preRenderView" />
+			</f:metadata>			
+		</ui:define>
+		<ui:define name="content">						
+			<h:form>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Fabricante"/>
+					</f:facet>
+				</p:toolbar>
+				
+				<p:button value="Novo" outcome="/pages/manufacturer/post.xhtml?faces-redirect=true">
+					<f:param name="action" value="new" />
+				</p:button>
+				
+				<p:separator />
+									
+				<p:dataTable emptyMessage="Nenhum registro encontrado." value="#{manufacturerBean.manufacturers}" var="manufacturer" rows="10" paginator="true">
+					<p:column headerText="Código" sortBy="#{manufacturer.id}">
+						<h:outputText value="#{manufacturer.id}" />
+					</p:column>
+					
+					<p:column headerText="Nome" sortBy="#{manufacturer.description}">
+						<h:outputText value="#{manufacturer.description}" />
+					</p:column>
+					
+					<p:column headerText="Opções">
+						<p:button value="Editar" outcome="/pages/manufacturer/post.xhtml">
+							<f:param name="id" value="#{manufacturer.id}" />
+							<f:param name="action" value="edit" />
+						</p:button>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

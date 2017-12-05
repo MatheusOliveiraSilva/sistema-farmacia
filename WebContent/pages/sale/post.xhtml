@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+
+	<ui:composition template="/templates/model.xhtml">
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:event listener="#{saleBean.fetchAllProducts}" type="preRenderView" />
+			</f:metadata>
+		</ui:define>
+		
+		<p:separator />
+		
+		<ui:define name="content">						
+			<h:form id="FormSale">
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Vendas"/>
+					</f:facet>
+				</p:toolbar>
+			
+				<p:dataTable emptyMessage="Nenhum registro encontrado." value="#{saleBean.products}" var="product" rows="3" paginator="true">
+					<p:column headerText="Código" sortBy="#{product.id}" style="width: 10%">
+						<h:outputText value="#{product.id}" />
+					</p:column>
+					
+					<p:column headerText="Descrição" sortBy="#{product.description}" filterBy="#{product.description}">
+						<h:outputText value="#{product.description}"/>
+					</p:column>
+					
+					<p:column headerText="Preço" sortBy="#{product.price}" style="width: 10%">
+						<h:outputText value="#{product.price}"/>
+					</p:column>
+					
+					<p:column headerText="Fabricante" sortBy="#{product.manufacturer.description}" filterBy="#{product.manufacturer.description}">
+						<h:outputText value="#{product.manufacturer.description}"/>
+					</p:column>
+					
+					<p:column headerTect="Opções" >
+						<p:commandButton value="Adicionar" actionListener="#{saleBean.addProduct(product)}" update=":FormSale:tableItems :FormSale:total" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:separator />
+				
+				<p:dataTable id="tableItems" emptyMessage="Nenhum registro encontrado." value="#{saleBean.items}" var="item" rows="3" paginator="true">
+					<p:column headerText="Produto">
+						<h:outputText value="#{item.product.description}" />
+					</p:column>
+					
+					<p:column headerText="Fabricante" >
+						<h:outputText value="#{item.product.manufacturer.description}"/>
+					</p:column>
+					
+					<p:column headerText="Quantidade">
+						<h:outputText value="#{item.quantity}"/>
+					</p:column>
+					
+					<p:column headerText="Valores Parciais">
+						<h:outputText value="#{item.value}"/>
+					</p:column>
+					
+					<p:column headerTect="Opções" >
+						<p:commandButton value="Remover" actionListener="#{saleBean.removeProduct(item)}" update=":FormSale:tableItems :FormSale:total" />
+					</p:column>
+				</p:dataTable>
+				
+				<p:separator />
+				
+				<h:panelGrid columns="1">		
+					<h:outputText id="total" value="Valor Total: #{saleBean.sale.total}" />
+					<p:commandButton value="Finalizar Venda" oncomplete="PF('sale_dialog').show();" actionListener="#{saleBean.loadSaleData}" update=":endSale:panel_final_sale" />
+				</h:panelGrid>
+			</h:form>
+			
+			<p:dialog modal="true" closable="true" draggable="true" resizable="false" header="Finalizar venda" widgetVar="sale_dialog" appendTo="@(body)">
+				<h:form id="endSale">
+					<h:panelGrid id="panel_final_sale" columns="2">
+						<h:outputLabel value="Horário:"/>
+						<h:outputText  value="#{saleBean.sale.time}">
+							<f:convertDateTime pattern="dd/MM/YYYY HH:mm" timeZone="America/SaoPaulo" />
+						</h:outputText>
+						
+						<h:outputLabel value="Funcionário:"/>
+						<h:outputLabel value="#{saleBean.sale.employee.name}"/>
+						
+						<h:outputLabel value="Valor Total:" />
+						<h:outputLabel value="#{saleBean.sale.total}"/>									
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2">
+						<p:commandButton value="Voltar" oncomplete="PF('sale_dialog').hide();"/>
+						<p:commandButton value="Salvar" actionListener="#{saleBean.save}" update=":globalMessage :FormSale:tableItems :FormSale:total" oncomplete="PF('sale_dialog').hide();"/>
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+		</ui:define>
+	</ui:composition>
+</html>

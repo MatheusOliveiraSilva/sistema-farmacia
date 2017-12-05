@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+
+	<ui:composition template="/templates/model.xhtml">
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:event listener="#{saleBean.fetchAll}" type="preRenderView" />
+			</f:metadata>
+		</ui:define>
+		
+		<ui:define name="content">						
+			<h:form>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Vendas"/>
+					</f:facet>
+				</p:toolbar>
+			
+				<p:dataTable emptyMessage="Nenhum registro encontrado." value="#{saleBean.products}" var="product" rows="10" paginator="true">
+					<p:column headerText="Código" sortBy="#{product.id}" style="width: 10%">
+						<h:outputText value="#{product.id}" />
+					</p:column>
+					
+					<p:column headerText="Descrição" sortBy="#{product.description}">
+						<h:outputText value="#{product.description}"/>
+					</p:column>
+					
+					<p:column headerText="Preço" sortBy="#{product.price}" style="width: 10%">
+						<h:outputText value="#{product.price}"/>
+					</p:column>
+					
+					<p:column headerText="Fabricante">
+						<h:outputText value="#{product.manufacturer.description}"/>
+					</p:column>
+										
+					<p:column headerTect="Opções" >
+						
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

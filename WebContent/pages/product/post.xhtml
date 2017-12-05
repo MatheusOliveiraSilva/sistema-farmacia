@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">	
+
+	<ui:composition template="/templates/model.xhtml">
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:event listener="#{productBean.findOne}" type="preRenderView" />
+			</f:metadata>			
+		</ui:define>
+		
+		<ui:define name="content">
+			<h:form>
+				 <p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Cargo"/>
+					</f:facet>
+				 </p:toolbar>
+				
+				 <h:panelGrid columns="2">
+				 	<p:outputLabel value="" />
+				 	<p:inputText maxlength="10" readonly="true" size="30" value="#{productBean.product.id}" type="hidden" />
+				 	
+				 	<p:outputLabel value="*Descrição" />
+				 	<p:inputText maxlength="50" size="30" value="#{productBean.product.description}">
+				 		<f:validateBean />
+				 	</p:inputText>
+				 	
+				 	<p:outputLabel value="*Preço" />
+				 	<p:inputText maxlength="50" size="30" value="#{productBean.product.price}">
+				 		<f:validateBean />
+				 	</p:inputText>
+				 	
+				 	<p:outputLabel value="*Fabricante" />
+				 	<p:selectOneMenu value="#{productBean.product.manufacturer}" converter="manufacturerConverter">
+				 		<f:selectItem itemValue="" itemLabel="Selecione um fabricante"/>
+				 		<f:selectItems value="#{productBean.manufacturers}"  var="manufacturer" itemValue="#{manufacturer}" itemLabel="#{manufacturer.description}"/>
+				 		<f:validateBean />
+				 	</p:selectOneMenu>
+				 </h:panelGrid>
+				 
+				 <h:panelGrid columns="2">
+				 	<p:button value="Voltar" outcome="/pages/product/list.xhtml?faces-redirect=true" />
+					<p:commandButton value="Salvar" actionListener="#{productBean.save}" update = ":globalMessage" rendered="#{productBean.action == 'new'}"/>
+					<p:commandButton value="Editar" actionListener="#{productBean.edit}" update = ":globalMessage" rendered="#{productBean.action == 'edit'}"/>
+				 </h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
